@@ -8,7 +8,7 @@ type: [temperature sensor, humidity sensor, illumination sensor]
 supports: temperature, humidity, illumination, battery
 zigbeemodel: ['TS0222','_TYZB01_kvwjujy9','_TYZB01_ftdkanlj']
 zb3: true
-compatible: [zha, tasmota, z2m, deconz, z4d]
+compatible: [tasmota, z2m, deconz, z4d]
 mlink: https://www.moeshouse.com/collections/zigbee/products/zigbee-smart-brightness-thermometer-real-time-light-sensitive-temperature-and-humidity-detector
 link: https://www.aliexpress.com/item/1005002525279564.html
 link2: https://www.banggood.com/MoesHouse-Smart-ZigBee-or-bluetooth-Mesh-Brightness-Thermometer-Light-Temperature-Humidity-Detector-Tuya-Smart-App-Alexa-Control-p-1842856.html
@@ -23,6 +23,8 @@ A workaround for the inconsistencies presented below is using a Tuya gateway via
 Temperature and humidity are reported when values change, or repeated at a fixed 60 minute interval.
 
 ## ZHA
+No positive confirmations of this device working correctly with ZHA yet. Most likely due to not having implemented Zigbee v3. The various resets as described in the scenario below, will drain the battery quickly. The frequent resets cause unreliable readings, which are not suitable for automations.
+
 In some scenarios, the device mysteriously stops to update HA with its values after a few minutes from pairing. In most scenarios though, the device seems to reset every 150 seconds and this causes all sensors to be reported momentarily, via ZigBee, as 0 degrees. Temperature and humidity do show show as zero on the display, and quickly get back to the correct values via ZigBee. However, luminance stays at zero in the screen, reports as 1 lux via ZigBee, and needs a "physical reset" (shadowing or covering its sensor for a few seconds) to report values correctly again. Continuous resets, at least once, caused a small "!" to appear on the screen while virtually nothing was updated, suggesting some internal processing error. 
 
 The impact of the temperature/humidity issues can be reduced by creating one template sensor for each of those measurements, in the Home Assistant's `configuration.yaml`. (supposing the real measured value is not 0 degrees)
